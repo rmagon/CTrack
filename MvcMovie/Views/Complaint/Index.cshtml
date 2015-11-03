@@ -1,0 +1,176 @@
+﻿@model IEnumerable<MvcMovie.Models.Complaint>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Complaints</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+@{
+    
+if(ViewBag.CompanyID != null)
+{
+if (ViewBag.DepartmentID == 0)
+{
+    <h3>Customer Service Department</h3>
+}
+else if (ViewBag.DepartmentID == 1)
+{
+    <h3>Human Resources Department</h3>
+}
+else if (ViewBag.DepartmentID == 2)
+{
+    <h3>Sales Department</h3>
+}
+else if (ViewBag.DepartmentID == 3)
+{
+    <h3>Inquiry Department</h3>
+}
+else if (ViewBag.DepartmentID == 4)
+{
+    <h3>Technical Department</h3>
+}
+<table class="table">
+    <tr>
+        <th>
+            Department
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Priority)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DueDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+@if (ViewBag.DepartmentID == -1)
+{
+    foreach (var item in Model) 
+    {
+        if (@ViewBag.CompanyID == item.CompanyID)
+        {
+        <tr>
+            <td>
+                @{
+                if (item.DepartmentID == 0)
+                {
+                    @Html.Raw("Service")
+                }
+                else if (item.DepartmentID == 1)
+                {
+                    @Html.Raw("HR")
+                }
+                else if (item.DepartmentID == 2)
+                {
+                    @Html.Raw("Sales")
+                }
+                else if (item.DepartmentID == 3)
+                {
+                    @Html.Raw("Inquiry")
+                }
+                else if (item.DepartmentID == 4)
+                {
+                    @Html.Raw("Tech")
+                }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
+                @Html.Raw(item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            </td>
+        </tr>
+        }
+    }
+}
+else
+{
+    foreach (var item in Model) 
+    {
+        if ((@ViewBag.CompanyID == item.CompanyID) && (@ViewBag.DepartmentID == item.DepartmentID))
+        {
+        <tr>
+            <td>
+               @{
+                if (item.DepartmentID == 0)
+                {
+                    @Html.Raw("C. Service")
+                }
+                else if (item.DepartmentID == 1)
+                {
+                    @Html.Raw("HR")
+                }
+                else if (item.DepartmentID == 2)
+                {
+                    @Html.Raw("Sales")
+                }
+                else if (item.DepartmentID == 3)
+                {
+                    @Html.Raw("Inquiry")
+                }
+                else if (item.DepartmentID == 4)
+                {
+                    @Html.Raw("Tech")
+                }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
+                @Html.Raw(item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            </td>
+        </tr>
+        }
+    }
+}
+
+</table>
+}
+else
+{
+    <h2>Error, No Company Specified</h2>
+}
+    }

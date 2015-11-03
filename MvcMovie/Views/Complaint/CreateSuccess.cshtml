@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "CreateSuccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    if(ViewBag.Success != null)
+    {
+        <div class="jumbotron">
+              <div class="container">
+                    <h1>Complaint Addedd Successfully !</h1>
+                    <p>Do you want to add another complaint for @ViewBag.CompanyName ?</p>
+                    <p>@Html.ActionLink("Add Another Complaint", "../Complaint/Create", new { companyid = ViewBag.CompanyId, companyname = @ViewBag.CompanyName }, new {@class = "btn btn-primary btn-lg" })</p>
+              </div>
+        </div>
+    }
+    else
+    {
+           <div class="jumbotron">
+              <div class="container">
+                    <h1>Error :(</h1>
+              </div>
+        </div>
+    }
+}

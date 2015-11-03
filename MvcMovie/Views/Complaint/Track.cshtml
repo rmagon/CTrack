@@ -1,0 +1,132 @@
+﻿@model MvcMovie.Models.Complaint
+@using MvcMovie.Globals
+@{
+    ViewBag.Title = "Track Complaint";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@if(ViewBag.Success == 1)
+{
+   <div class="alert alert-success">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <p><strong>Great!</strong> You replied to the Complaint.<br />Check at the end of the Message!</p>
+  </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Complaint</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+         @Html.HiddenFor(model => model.CompanyID)
+        @Html.HiddenFor(model => model.Date)
+        @Html.HiddenFor(model => model.Description)
+        @Html.HiddenFor(model => model.DepartmentID)
+        @Html.HiddenFor(model => model.Priority)
+        @Html.HiddenFor(model => model.Status)
+        @Html.HiddenFor(model => model.DueDate)
+        @Html.HiddenFor(model => model.ToDo)
+        @Html.HiddenFor(model => model.Activities)
+            <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartmentID)
+        </dt>
+
+        <dd>
+            @{
+                if (Model.DepartmentID == 0)
+                {
+                    <h3>Customer Service Department</h3>
+                }
+                else if (Model.DepartmentID == 1)
+                {
+                    <h3>Human Resources Department</h3>
+                }
+                else if (Model.DepartmentID == 2)
+                {
+                    <h3>Sales Department</h3>
+                }
+                else if (Model.DepartmentID == 3)
+                {
+                    <h3>Inquiry Department</h3>
+                }
+                else if (Model.DepartmentID == 4)
+                {
+                    <h3>Technical Department</h3>
+                }
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DueDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ToDo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToDo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activities)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activities)
+        </dd>
+
+    </dl>
+
+        <div class="form-group">
+            @Html.Label("Reply", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextArea("NewDescription", new { @class = "form-control", @rows = 5 })
+            </div>
+        </div>  
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,75 @@
+﻿@model MvcCTrack.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+        
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
+    <hr />
+    @Html.ValidationSummary()
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+
+        if(ViewBag.Role == "admin")
+        {
+            <div class="form-group">
+                @Html.HiddenFor(m => m.Role,new { Value = "admin" })
+                @Html.HiddenFor(m => m.companyid,new { Value = ViewBag.CompanyID })
+                Please create an admin account for <b>@ViewBag.CompanyName</b>
+            </div>
+        }
+        else
+        {
+             <div class="form-group">
+                    <label class="col-md-2 control-label" for="departmentId">Department</label>
+                    <div class="col-md-10">
+                @Html.DropDownListFor(model => model.departmentId, new List<SelectListItem>
+                     {
+                        new SelectListItem{ Text="Customer Service", Value = "0" },
+                        new SelectListItem{ Text="Human Resources", Value = "1" },
+                        new SelectListItem{ Text="Sales", Value = "2" },
+                        new SelectListItem{ Text="Inquiry", Value = "3" },
+                        new SelectListItem{ Text="Technical", Value = "4" }
+                     },new {@class = "form-control"}) 
+                        </div>
+            </div>
+            <div class="form-group">
+                @Html.HiddenFor(m => m.Role,new { Value = "agent" })
+                @Html.HiddenFor(m => m.companyid,new { Value = ViewBag.CompanyID })
+                Please create a new agent account for Company ID:<b>@ViewBag.CompanyID</b><br /><hr />
+                <b>WARNING: Creating an agent account will LOG YOU OUT and LOG IN from the NEW ACCOUNT</b>
+            </div>
+        }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Register" />
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

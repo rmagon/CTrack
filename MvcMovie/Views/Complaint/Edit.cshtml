@@ -1,0 +1,130 @@
+﻿@model MvcMovie.Models.Complaint
+@using MvcMovie.Globals
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Complaint</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+         @Html.HiddenFor(model => model.CompanyID)
+        @Html.HiddenFor(model => model.Date)
+        @Html.HiddenFor(model => model.Description)
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentID, new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+             @*   @Html.EditorFor(model => model.DepartmentID)*@
+
+                 @Html.DropDownListFor(model => model.DepartmentID, new List<SelectListItem>
+                 {
+                    new SelectListItem{ Text="Customer Service", Value = "0" },
+                    new SelectListItem{ Text="Human Resources", Value = "1" },
+                    new SelectListItem{ Text="Sales", Value = "2" },
+                    new SelectListItem{ Text="Inquiry", Value = "3" },
+                    new SelectListItem{ Text="Technical", Value = "4" }
+                 },new {@class = "form-control"}) 
+
+                @Html.ValidationMessageFor(model => model.DepartmentID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Created On</label>
+            <div class="col-md-10">
+               <p class="form-control-static">@Model.Date</p>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Priority, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                               @Html.DropDownListFor(model => model.Priority, new List<SelectListItem>
+                 {
+                    new SelectListItem{ Text="Low", Value = "0" },
+                    new SelectListItem{ Text="Normal", Value = "1" },
+                    new SelectListItem{ Text="High", Value = "2" },
+                    new SelectListItem{ Text="Very High", Value = "3" },
+                 },new {@class = "form-control"}) 
+
+                @Html.ValidationMessageFor(model => model.Priority)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                 @Html.DropDownListFor(model => model.Status, new List<SelectListItem>
+                 {
+                    new SelectListItem{ Text="New", Value = Constants.STATUS_NEW },
+                    new SelectListItem{ Text="Assigned", Value = Constants.STATUS_ASSIGNED},
+                    new SelectListItem{ Text="Closed", Value =  Constants.STATUS_CLOSED },
+                 },new {@class = "form-control"}) 
+                @Html.ValidationMessageFor(model => model.Status)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DueDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.DueDate, new { @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(model => model.DueDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p>@Html.Raw(Model.Description)</p>
+             @*   @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @rows = 5 })*@
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Proposed Solution", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextArea("NewDescription", new { @class = "form-control", @rows = 5, @placeholder = "Enter Text" })
+            </div>
+        </div>  
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ToDo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.ToDo, new { @class = "form-control", @rows = 2 })
+                @Html.ValidationMessageFor(model => model.ToDo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Activities, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Activities, new { @class = "form-control", @rows = 2 })
+                @Html.ValidationMessageFor(model => model.Activities)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save and View Department Tickets" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Open All Tickets for this Department", "Index",new {companyid = Model.CompanyID, departmentId = Model.DepartmentID})
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

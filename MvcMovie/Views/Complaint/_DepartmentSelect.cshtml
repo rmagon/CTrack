@@ -1,0 +1,25 @@
+﻿@model int
+<h3>Select a Department</h3>
+@using (Html.BeginForm("Index", "Complaint"))
+{
+    
+<div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.DropDownList("DepartmentID", new List<SelectListItem>
+            {
+            new SelectListItem{ Text="Customer Service", Value = "0" },
+            new SelectListItem{ Text="Human Resources", Value = "1" },
+            new SelectListItem{ Text="Sales", Value = "2" },
+            new SelectListItem{ Text="Inquiry", Value = "3" },
+            new SelectListItem{ Text="Technical", Value = "4" }
+            },new {@class = "form-control"}) 
+        @Html.Hidden("CompanyID",new {Model})
+        <hr />
+        </div>
+</div>    
+<div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="View Complaints" class="btn btn-default" />
+        </div>
+</div>
+}
